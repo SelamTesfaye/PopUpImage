@@ -36,54 +36,84 @@ g <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 		    text-align : center;
 		}
     </style>
-	<!--script src="raphael-min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="raphael-zpd.js" type="text/javascript" charset="utf-8"></script -->
-	<!-- <script src="picture.js" type="text/javascript" charset="utf-8"></script> -->
-	
-	<!-- Drawing multiple line check-->
-		<html>
-		<head>
+
+
 		<script type="text/javascript">
-		function drawShape(){
-		  // get the canvas element using the DOM
-		  var canvas = document.getElementById('mycanvas');
-		 
-		  // Make sure we don't execute when canvas isn't supported
-		  if (canvas.getContext){
-		 
-		    // use getContext to use the canvas for drawing
-		    var ctx = canvas.getContext('2d');
-		   for (i=0;i<10;i++){
-		       ctx.lineWidth = 1+i;
-		       ctx.beginPath();
-		       ctx.moveTo(5+i*14,5);
-		       ctx.lineTo(5+i*14,140);
-		       ctx.stroke();
-		    }
-		  } else {
-		    alert('You need Safari or Firefox 1.5+ to see this demo.');
-		  }
-		}
+		function getElementLeft(elm) 
+			{
+			    var x = 0;
+			
+			    //set x to elm’s offsetLeft
+			    x = elm.offsetLeft;
+			
+			    //set elm to its offsetParent
+			    elm = elm.offsetParent;
+			
+			    //use while loop to check if elm is null
+			    // if not then add current elm’s offsetLeft to x
+			    //offsetTop to y and set elm to its offsetParent
+			
+			    while(elm != null)
+			    {
+			        x = parseInt(x) + parseInt(elm.offsetLeft);
+			        elm = elm.offsetParent;
+			    }
+			    return x;
+			}
+			
+			function getElementTop(elm) 
+			{
+			    var y = 0;
+			
+			    //set x to elm’s offsetLeft
+			    y = elm.offsetTop;
+			
+			    //set elm to its offsetParent
+			    elm = elm.offsetParent;
+			
+			    //use while loop to check if elm is null
+			    // if not then add current elm’s offsetLeft to x
+			    //offsetTop to y and set elm to its offsetParent
+			
+			    while(elm != null)
+			    {
+			        y = parseInt(y) + parseInt(elm.offsetTop);
+			        elm = elm.offsetParent;
+			    }
+			
+			    return y;
+			}
 		</script>
-		</head>
-		<body onload="drawShape();">
-		   <canvas id="mycanvas"></canvas>
-		</body>
-		</html>
+	<script>
+		function Large(obj)
+{
+    var imgbox=document.getElementById("imgbox");
+    imgbox.style.visibility='visible';
+    var img = document.createElement("img");
+    img.src=obj.src;
+    img.style.width='200px';
+    img.style.height='200px';
+    
+    if(img.addEventListener){
+        img.addEventListener('mouseout',Out,false);
+    } else {
+        img.attachEvent('onmouseout',Out);
+    }             
+    imgbox.innerHTML='';
+    imgbox.appendChild(img);
+    imgbox.style.left=(getElementLeft(obj)-50) +'px';
+    imgbox.style.top=(getElementTop(obj)-50) + 'px';
+}
+	</script>
+	<script> 
+	function Out()
+		{
+		   document.getElementById("imgbox").style.visibility='hidden';
+		}
+	</script>
+<img id='img1' src='images/Sample.jpg' onmouseover="Large(this)" />
+</head>
 	
-	<!-- SCRIPT LANGUAGE="JavaScript">
-		window.onload = function () {
-			var paper = Raphael('paper', 800, 800);
-			paper.ZPD({ zoom: true, pan: true, drag: false });
-			// regular rectangle
-			var G13050 = paper.circle(1222, 173, 14).attr({fill:"#E0E0E0", stroke:"#E0E0E0"});
-			// rectangle with rounded corners
-		};
-	</SCRIPT>
-  </head>
-  
-  <body>
-    <div id="paper"></div>
-  </body>
-  
-</html-->
+</html>
+	
+
